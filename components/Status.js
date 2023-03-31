@@ -24,6 +24,7 @@ function Status(props) {
     const txHash=props?.txHash
     const { address, isConnected, isConnecting, isDisconnected } = useAccount();
     const txScan=initialchainData?.explorer?.tx
+    const txScanTo=destinationchainData?.explorer?.tx
     const transHash=txHash?.transactionHash
     
     
@@ -76,7 +77,10 @@ function Status(props) {
         </li>
         <li>
           <small>
-          {txHash?.transactionHash.slice(0, 7) + "..." + txHash?.transactionHash.slice(-7)}
+            <a href={`${txScan}${transHash}`} target="_blank">
+            {txHash?.transactionHash.slice(0, 7) + "..." + txHash?.transactionHash.slice(-7)}
+            </a>
+         
           <a onClick={() =>  navigator.clipboard.writeText(`${txHash?.transactionHash}`)}>
           <img src="img/copy.png" alt="" />
           </a>
@@ -116,7 +120,10 @@ function Status(props) {
         </li>
         <li>
           <small>
-          {txHash?.transactionHash.slice(0, 7) + "..." + txHash?.transactionHash.slice(-7)}
+            <a href={`${txScanTo}${transHash}`} target="_blank"> 
+            {txHash?.transactionHash.slice(0, 7) + "..." + txHash?.transactionHash.slice(-7)}
+            </a>
+         
           <a onClick={() =>  navigator.clipboard.writeText(`${txHash?.transactionHash}`)}>
           <img src="img/copy.png" alt="" />
           </a>

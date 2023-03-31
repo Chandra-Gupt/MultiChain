@@ -41,7 +41,7 @@ function Swap(props) {
   
   async function swap() {
     setIsLoading(true);
-    // setStatusModalShow(true);
+    setStatusModalShow(true);
     var abi = [
       {
       "inputs": [
