@@ -18,8 +18,8 @@ function DestinationCoinList(props) {
 
 
 
-  console.log(props?.destinationcoinData,'data iddddddddddddd')
-  console.log(props?.deschainId,'chaind iddddddddddddd')
+  // console.log(props?.destinationcoinData,'data iddddddddddddd')
+  // console.log(props?.deschainId,'chaind iddddddddddddd')
    const deschainId=props?.deschainId
    const selectData=props?.selectData
   
@@ -30,7 +30,7 @@ function DestinationCoinList(props) {
           var Token = Object.values(obj);
           setNewData(Token[0]);
           props?.setNewData1(Token[0])
-          console.log(Token,"ddddddddddestination");
+          // console.log(Token,"ddddddddddestination");
         }
        
       }

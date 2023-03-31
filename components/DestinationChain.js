@@ -11,7 +11,7 @@ function DestinationChain(props) {
   const [destinationChain,setDestinationChain]=useState();
   const router = new useRouter();
   const destChains=props?.destChainss;
-  console.log(destChains,"bbbbbbbbbbbb");
+  // console.log(destChains,"bbbbbbbbbbbb");
     
   
   async function tokenlist() {

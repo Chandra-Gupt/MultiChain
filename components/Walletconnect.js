@@ -69,7 +69,7 @@ function Walletconnect() {
       const { address } = await window.martian.connect();
 
       // const walletAddress = publicKey?.toBase58();
-      console.log(address, "hhhhhhhhhh.........lllllllll");
+      // console.log(address, "hhhhhhhhhh.........lllllllll");
       setSolAddres(address);
       setShowCustomWallet(false);
     } else {
@@ -78,11 +78,11 @@ function Walletconnect() {
   }
   async function connecttowallet12() {
     if (customWalletName == "Pontem") {
-      console.log("hello Aptos....................................");
+      // console.log("hello Aptos....................................");
       const { address } = await window.pontem.connect();
 
       // const walletAddress = publicKey?.toBase58();
-      console.log(address, "hhhhhhhhhh.........lllllllll");
+      // console.log(address, "hhhhhhhhhh.........lllllllll");
       setSolAddres(address);
       setShowCustomWallet(false);
     } else {
@@ -90,7 +90,7 @@ function Walletconnect() {
     }
   }
 
-  console.log(destToken,"bbbbbbbbbbbbbbbbbbbbbbbb")
+  // console.log(destToken,"bbbbbbbbbbbbbbbbbbbbbbbb")
 
   async function chainId1() {
     if (initialchainData) {
@@ -225,7 +225,7 @@ function Walletconnect() {
       if(obj){
         var Token = Object.values(obj);
         setDestToken(Token[0]);
-        console.log(Token[0],"ddddddddddestination");
+        // console.log(Token[0],"ddddddddddestination");
       }
       
     }

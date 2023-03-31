@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Status from "./Status";
 import { useAccount, useDisconnect, useSwitchNetwork, useBalance } from "wagmi";
 import Web3 from "web3";
-import { Audio ,ColorRing} from 'react-loader-spinner'
+
 
 function Swap(props) {
   const [statusModalShow, setStatusModalShow] = React.useState(false);
@@ -25,7 +25,7 @@ function Swap(props) {
   const setSwapModalShow=props?.setSwapModalShow
 
   const [isLoading,setIsLoading]=useState(false);
-  console.log("selectData",toAddress)
+  // console.log("selectData",toAddress)
   useEffect(()=>{
     if(toaddress!=undefined){
       setToAddress(toaddress)
@@ -36,7 +36,7 @@ function Swap(props) {
 
   },[toaddress,address])
 
-  console.log(txHash,"kkkkkkkk")
+  // console.log(txHash,"kkkkkkkk")
   
   
   async function swap() {
@@ -274,7 +274,7 @@ function Swap(props) {
     const anyToken=Token[0]?.fromanytoken?.address;
     var contract_address = Token[0]?.router;
     var contract_abi=Token[0]?.routerABI;
-    console.log(anyToken,"dddd");
+    // console.log(anyToken,"dddd");
     const appRoveAnyToken = selectData?.address;
     const amount = tokenvalue * 10 ** selectData?.decimals;
     const toChainID = deschainId;
@@ -296,7 +296,7 @@ function Swap(props) {
           const isapprove = await tokenContract.methods.approve(contract_address,  `${amount}`).send({
          from: address
          })
-         console.log(isapprove, "approve");
+        //  console.log(isapprove, "approve");
       }
     }
     

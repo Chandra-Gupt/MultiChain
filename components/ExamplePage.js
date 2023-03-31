@@ -11,7 +11,7 @@ function ExamplePage() {
         const obj=Object.values(data)
         setCoindata(obj)
         
-        console.log(obj,"nnnnnnnnnnnnnnnnnn")
+        // console.log(obj,"nnnnnnnnnnnnnnnnnn")
      }
      catch(err){
        console.log(err)

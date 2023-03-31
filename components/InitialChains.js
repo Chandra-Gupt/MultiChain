@@ -39,7 +39,7 @@ function InitialChain(props) {
       setCoindata(covert)
        props?.setIsInitialChainData(covert[0]);
        localStorage.setItem("initialchain",JSON.stringify(covert[0]))
-       console.log(covert,"ggggggggggggggggggggggggggg...........")
+      //  console.log(covert,"ggggggggggggggggggggggggggg...........")
     }
   
   }
@@ -50,7 +50,7 @@ function InitialChain(props) {
     
   }, [chainData])
   
-  console.log(chainData,'cccccccccccccccccccccc')
+  // console.log(chainData,'cccccccccccccccccccccc')
 
   async function searchHandle(e) {
     const term = e.target.value.toLowerCase();
@@ -72,7 +72,7 @@ function InitialChain(props) {
 
   async function coinitem(item) {
     props?.setIsInitialChainData(item);
-    console.log(item,"nnnnnnnitem")
+    // console.log(item,"nnnnnnnitem")
     localStorage.setItem("initialchain",JSON.stringify(item))
     // window.location.reload()
     setModalShow(false);
