@@ -196,8 +196,8 @@ function Walletconnect() {
   console.log( "connected................>");
   async function targetTokenValue() {
    const value1= (tokenvalue * (destToken?.SwapFeeRatePerMillion)) / 100;
-   if(tokenvalue>=Number(destToken?.MinimumSwap)){
-    if(value1<=Number(destToken?.MinimumSwapFee)){
+   if(tokenvalue>Number(destToken?.MinimumSwap)){
+    if(value1<Number(destToken?.MinimumSwapFee)){
       setTargetTokenValue(tokenvalue-Number(destToken?.MinimumSwapFee));
      }else {
       setTargetTokenValue(tokenvalue-value1);
