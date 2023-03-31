@@ -196,7 +196,7 @@ function Status(props) {
       </ProgressBar>
      <p className="txDetail">
      You can Check your transaction detail here
-     <a href={`${txScan}${transHash}`} >Transaction</a>
+     <a href={`https://scanapi.multichain.org/v3/tx/${transHash}`}>Transaction</a>
      </p>
      
      
