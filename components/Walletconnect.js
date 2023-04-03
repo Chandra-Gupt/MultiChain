@@ -193,7 +193,7 @@ function Walletconnect() {
 
   
 
-  console.log( "connected................>");
+  console.log( chainId,"connected................>");
   async function targetTokenValue() {
    const value1= (tokenvalue * (destToken?.SwapFeeRatePerMillion)) / 100;
    if(tokenvalue>=Number(destToken?.MinimumSwap)){
@@ -272,49 +272,49 @@ function Walletconnect() {
     setTokenValue(token_value);
   }
 
-  async function tokenBalance(){
-    var abi1 = [
+  // async function tokenBalance(){
+  //   var abi1 = [
      
       
-      {
-        "constant":true,
-        "inputs":[{"name":"_owner","type":"address"}],
-        "name":"balanceOf",
-        "outputs":[{"name":"balance","type":"uint256"}],
-        "type":"function"
-      },
-      // decimals
-      {
-        "constant":true,
-        "inputs":[],
-        "name":"decimals",
-        "outputs":[{"name":"","type":"uint8"}],
-        "type":"function"
-      }
-    ];
-    const web3 = new Web3(Web3.givenProvider);
-    const anyToken = selectData?.address;
-    const walletAddress=address;
-    if(anyToken?.length>=10){
-      const tokenContract=new web3.eth.Contract(abi1,anyToken)
-    }
+  //     {
+  //       "constant":true,
+  //       "inputs":[{"name":"_owner","type":"address"}],
+  //       "name":"balanceOf",
+  //       "outputs":[{"name":"balance","type":"uint256"}],
+  //       "type":"function"
+  //     },
+  //     // decimals
+  //     {
+  //       "constant":true,
+  //       "inputs":[],
+  //       "name":"decimals",
+  //       "outputs":[{"name":"","type":"uint8"}],
+  //       "type":"function"
+  //     }
+  //   ];
+  //   const web3 = new Web3(Web3.givenProvider);
+  //   const anyToken = selectData?.address;
+  //   const walletAddress=address;
+  //   if(anyToken?.length>=10){
+  //     const tokenContract=new web3.eth.Contract(abi1,anyToken)
+  //   }
     
-    if(address&&anyToken){
-      try{
-        let result = await tokenContract.methods.balanceOf(walletAddress).call();
-       const balance= web3.utils.fromWei(result, "ether")
-        setWalletBalance(balance)
-      }catch(err){
-        console.log(err)
-      }
+  //   if(address&&anyToken){
+  //     try{
+  //       let result = await tokenContract.methods.balanceOf(walletAddress).call();
+  //      const balance= web3.utils.fromWei(result, "ether")
+  //       setWalletBalance(balance)
+  //     }catch(err){
+  //       console.log(err)
+  //     }
      
-    }
+  //   }
     
-  }
+  // }
 
-  useEffect(() => {
-    tokenBalance();
-  }, [selectData,chainId]);
+  // useEffect(() => {
+  //   tokenBalance();
+  // }, [selectData,chainId]);
 
   async function toAddress(e){
    const Address=e.target.value

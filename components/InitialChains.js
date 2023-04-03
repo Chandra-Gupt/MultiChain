@@ -22,7 +22,7 @@ function InitialChain(props) {
       const response = await axios.post("/api/initialChain",);
       const data = response.data.data;
       setChainData(data);
-     
+      console.log(data,"ggggggggggggggggggggggggggg...........")
     } catch (err) {
       console.log(err);
     }
@@ -30,16 +30,16 @@ function InitialChain(props) {
 
   async function allChainData(){
     if(chainData){
-      var covert  = Object.keys(chainData).map(function(key)  
+      var convert  = Object.keys(chainData).map(function(key)  
       {  
        const data =chainData[key];
-       data['ChainId']=Number(key);
+       data['ChainId']=(key);
      return data;  
       });  
-      setCoindata(covert)
-       props?.setIsInitialChainData(covert[0]);
+      setCoindata(convert)
+       props?.setIsInitialChainData(convert[0]);
       //  localStorage.setItem("initialchain",JSON.stringify(covert[0]))
-      //  console.log(covert,"ggggggggggggggggggggggggggg...........")
+      //  console.log(convert,"ggggggggggggggggggggggggggg...........")
     }
   
   }
@@ -50,7 +50,7 @@ function InitialChain(props) {
     
   }, [chainData])
   
-  // console.log(chainData,'cccccccccccccccccccccc')
+  console.log(chainData,'cccccccccccccccccccccc')
 
   async function searchHandle(e) {
     const term = e.target.value.toLowerCase();
