@@ -40,7 +40,7 @@ function Walletconnect() {
   const [toAddresss,setToAddress]=useState()
   const [destToken,setDestToken]=useState();
   const [alertColor,setAlertColor]=useState()
-
+  const [isDisabled,setIsDisabled]=useState(true);
   const { data, isError, isLoading } = useBalance({
     address: address,
   });
@@ -196,14 +196,18 @@ function Walletconnect() {
   console.log( "connected................>");
   async function targetTokenValue() {
    const value1= (tokenvalue * (destToken?.SwapFeeRatePerMillion)) / 100;
-   if(tokenvalue>Number(destToken?.MinimumSwap)){
+   if(tokenvalue>=Number(destToken?.MinimumSwap)){
     if(value1<Number(destToken?.MinimumSwapFee)){
       setTargetTokenValue(tokenvalue-Number(destToken?.MinimumSwapFee));
+      setIsDisabled(false)
+  
      }else {
       setTargetTokenValue(tokenvalue-value1);
+      setIsDisabled(false)
      }
    }else{
     setTargetTokenValue(0);
+    setIsDisabled(true);
    }
    
     // const value = tokenvalue - (tokenvalue * 0.1) / 100;
@@ -676,14 +680,14 @@ function Walletconnect() {
               </ul>
             </div>
             <div className="btn-connect">
-              <a href="#" className="custom-wallet" onClick={()=>setSwapModalShow(true)}>
+              <button href="#" className="custom-wallet" disabled={isDisabled} onClick={()=>setSwapModalShow(true)}>
                 {/* < Web3Button
                 icon="hide"
                 label='Connect Wallet'
                 balance='hide'
                 /> */}
                 Swap
-              </a>
+              </button>
             </div>
           </div>
         </div>

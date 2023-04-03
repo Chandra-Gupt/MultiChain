@@ -38,7 +38,7 @@ function InitialChain(props) {
       });  
       setCoindata(covert)
        props?.setIsInitialChainData(covert[0]);
-       localStorage.setItem("initialchain",JSON.stringify(covert[0]))
+      //  localStorage.setItem("initialchain",JSON.stringify(covert[0]))
       //  console.log(covert,"ggggggggggggggggggggggggggg...........")
     }
   

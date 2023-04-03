@@ -441,7 +441,7 @@ function Swap(props) {
                     <span>{destinationchainData?.name}</span>
                   </li>
                   <li>
-                    <small>+{targettokenvalue} {newData?.symbol}</small>
+                    <small>+{targettokenvalue.toFixed(4)} {newData?.symbol}</small>
                   </li>
                 </ul>
                 <ul>
