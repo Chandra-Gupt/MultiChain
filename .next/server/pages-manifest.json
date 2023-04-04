@@ -3,5 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/api/initialChain": "pages/api/initialChain.js"
+  "/api/initialChain": "pages/api/initialChain.js",
+  "/api/destinationChain": "pages/api/destinationChain.js",
+  "/api/examplepage": "pages/api/examplepage.js"
 }

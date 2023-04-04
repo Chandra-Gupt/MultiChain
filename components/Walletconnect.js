@@ -90,7 +90,7 @@ function Walletconnect() {
     }
   }
 
-  // console.log(destToken,"bbbbbbbbbbbbbbbbbbbbbbbb")
+  console.log(destinationcoinData,"bbbbbbbbbbbbbbbbbbbbbbbb")
 
   async function chainId1() {
     if (initialchainData) {
