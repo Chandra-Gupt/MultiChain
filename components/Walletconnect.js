@@ -122,7 +122,7 @@ function Walletconnect() {
         try {
           await ethereum.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${chainId.toString(16)}` }],
+            params: [{ chainId: `0x${Number(chainId).toString(16)}` }],
           });
         } catch (switchError) {
           if (switchError.code === 4902) {
@@ -131,7 +131,7 @@ function Walletconnect() {
                 method: "wallet_addEthereumChain",
                 params: [
                   {
-                    chainId: `0x${chainId.toString(16)}`,
+                    chainId: `0x${Number(chainId).toString(16)}`,
                     chainName: `${initialchainData?.name}`,
                     rpcUrls: [`${initialchainData?.rpc}`],
                     nativeCurrency: {
