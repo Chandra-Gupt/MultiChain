@@ -59,6 +59,7 @@ function DestinationChain(props) {
   async function coinitem(item) {
     props?.setDestinationchainData(item);
     setModalShow(false);
+    setSearchedData(null)
   }
   return (
     <Modal

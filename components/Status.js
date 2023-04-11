@@ -25,7 +25,7 @@ function Status(props) {
     const { address, isConnected, isConnecting, isDisconnected } = useAccount();
     const txScan=initialchainData?.explorer?.tx
     const txScanTo=destinationchainData?.explorer?.tx
-    const transHash=txHash?.transactionHash
+    
     
     
    
@@ -77,11 +77,11 @@ function Status(props) {
         </li>
         <li>
           <small>
-            <a href={`${txScan}${transHash}`} target="_blank">
-            {txHash?.transactionHash.slice(0, 7) + "..." + txHash?.transactionHash.slice(-7)}
+            <a href={`${txScan}${txHash}`} target="_blank">
+            {txHash?.slice(0, 7) + "..." + txHash?.slice(-7)}
             </a>
          
-          <a onClick={() =>  navigator.clipboard.writeText(`${txHash?.transactionHash}`)}>
+          <a onClick={() =>  navigator.clipboard.writeText(`${txHash}`)}>
           <img src="img/copy.png" alt="" />
           </a>
            
@@ -120,11 +120,11 @@ function Status(props) {
         </li>
         <li>
           <small>
-            <a href={`${txScanTo}${transHash}`} target="_blank"> 
-            {txHash?.transactionHash.slice(0, 7) + "..." + txHash?.transactionHash.slice(-7)}
+            <a href={`${txScanTo}${txHash}`} target="_blank"> 
+            {txHash?.slice(0, 7) + "..." + txHash?.slice(-7)}
             </a>
          
-          <a onClick={() =>  navigator.clipboard.writeText(`${txHash?.transactionHash}`)}>
+          <a onClick={() =>  navigator.clipboard.writeText(`${txHash}`)}>
           <img src="img/copy.png" alt="" />
           </a>
           </small>
@@ -203,7 +203,7 @@ function Status(props) {
       </ProgressBar>
      <p className="txDetail">
      You can Check your transaction detail here
-     <a href={`https://scanapi.multichain.org/v3/tx/${transHash}`}>Transaction</a>
+     <a href={`https://scanapi.multichain.org/v3/tx/${txHash}`} target="_blank">Transaction</a>
      </p>
      
      

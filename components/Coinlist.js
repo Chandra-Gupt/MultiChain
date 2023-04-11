@@ -55,6 +55,7 @@ function Coinlist(props) {
     props?.setSelectData(item);
     // console.log("-------------->",item)
     setModalShow(false);
+    setSearchedData(null)
   }
 
   async function searchHandle(e) {

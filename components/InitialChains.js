@@ -75,7 +75,7 @@ function InitialChain(props) {
     // console.log(item,"nnnnnnnitem")
     localStorage.setItem("initialchain",JSON.stringify(item))
     // window.location.reload()
-    setModalShow(false);
+    setSearchedData(null)
   }
 
   // console.log("coindata------>",coindata);

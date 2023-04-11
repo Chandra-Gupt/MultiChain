@@ -6,7 +6,10 @@ import { useRouter } from "next/router";
 import Status from "./Status";
 import { useAccount, useDisconnect, useSwitchNetwork, useBalance } from "wagmi";
 import Web3 from "web3";
-
+import { Connection, PublicKey, Keypair, Transaction, TransactionInstruction } from '@solana/web3.js';
+import * as spl from "@solana/spl-token";
+// import anchor from '@project-serum/anchor'
+const anchor = require('@project-serum/anchor')
 
 function Swap(props) {
   const [statusModalShow, setStatusModalShow] = React.useState(false);
@@ -23,8 +26,12 @@ function Swap(props) {
   const targettokenvalue=props?.targettokenvalue
   const toaddress=props?.toAddresss
   const setSwapModalShow=props?.setSwapModalShow
-
+  const walletAddress=props?.walletAddress
   const [isLoading,setIsLoading]=useState(false);
+
+  const { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, Token} = spl
+  const solanaWeb3 = anchor.web3
+  const Program = anchor.Program
   // console.log("selectData",toAddress)
   useEffect(()=>{
     if(toaddress!=undefined){
@@ -310,10 +317,11 @@ function Swap(props) {
        
         gasLimit: '270000',
       });
+      setTxHash(tx?.transactionHash)
       setStatusModalShow(true);
       setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
 
-      setTxHash(tx)
+      
       console.log(tx)
      }else if (contract_abi=="anySwapOut(fromanytoken,toAddress,amount,toChainID)"){
       const tx = await contract.methods
@@ -324,10 +332,11 @@ function Swap(props) {
        
         gasLimit: '270000',
       });
+      setTxHash(tx?.transactionHash)
       setStatusModalShow(true);
       setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
 
-      setTxHash(tx)
+      
       console.log(tx)
 
      }else if (contract_abi=="anySwapOutNative(fromanytoken,toAddress,toChainID,{value: amount})"){
@@ -339,9 +348,766 @@ function Swap(props) {
         value:`${amount}`,
         gasLimit: '270000',
       });
-     setTxHash(tx)
+     setTxHash(tx?.transactionHash)
      setStatusModalShow(true);
      setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+
+     console.log(tx)
+    }else if (contract_abi=="Swapout(amount,toAddress)"){
+      const tx = await contract.methods
+      .Swapout(`${amount}`,toAddress)
+      .send({
+        from: address,
+        
+       
+        gasLimit: '270000',
+      });
+      setTxHash(tx?.transactionHash)
+      console.log(tx)
+     if(tx?.status==true){      
+      console.log(tx)
+      setStatusModalShow(true);
+      setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+      
+      alert("transaction success")
+     }else{
+      alert("transaction failed")
+     }
+    }
+     
+  }
+  async function solanaSwap() {
+    setIsLoading(true);
+    // setStatusModalShow(true);
+    var abi = {
+      "version": "0.1.0",
+      "name": "router",
+      "instructions": [
+        {
+          "name": "initialize",
+          "docs": [
+            "Create pda account `router_account`, init `mpc`",
+            "`mpc` is the authority account to manage `router_account`"
+          ],
+          "accounts": [
+            {
+              "name": "initializer",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "mpc",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "systemProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "bumpSeed",
+              "type": "u8"
+            }
+          ]
+        },
+        {
+          "name": "createAssociatedToken",
+          "docs": [
+            "create router account's associated token"
+          ],
+          "accounts": [
+            {
+              "name": "payer",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "authority",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "mint",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "associatedToken",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "rent",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "systemProgram",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "tokenProgram",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "associatedTokenProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": []
+        },
+        {
+          "name": "changeMpc",
+          "docs": [
+            "Set pending manage account of pda account `router_account`"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "newMpc",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "new",
+              "type": "publicKey"
+            }
+          ]
+        },
+        {
+          "name": "applyMpc",
+          "docs": [
+            "Change manage account of pda account `router_account`"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "newMpc",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "new",
+              "type": "publicKey"
+            }
+          ]
+        },
+        {
+          "name": "enableSwapTrade",
+          "docs": [
+            "Pause this contract"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "enable",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "name": "swapinMint",
+          "docs": [
+            "Swapin by mint token from pda account `router_account` to receiver",
+            "The signer must be `router_account.mpc`"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "to",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "mint",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "tokenProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "tx",
+              "type": "string"
+            },
+            {
+              "name": "amount",
+              "type": "u64"
+            },
+            {
+              "name": "fromChainid",
+              "type": "u64"
+            }
+          ]
+        },
+        {
+          "name": "swapinTransfer",
+          "docs": [
+            "Swapin by transfer token from pda account `router_account` to receiver",
+            "The signer must be `router_account.mpc`"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "from",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "to",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "mint",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "tokenProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "tx",
+              "type": "string"
+            },
+            {
+              "name": "amount",
+              "type": "u64"
+            },
+            {
+              "name": "fromChainid",
+              "type": "u64"
+            }
+          ]
+        },
+        {
+          "name": "swapinNative",
+          "docs": [
+            "Swapin by transfer native SOL from pda account `router_account` to receiver",
+            "The signer must be `router_account.mpc`"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "to",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "systemProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "tx",
+              "type": "string"
+            },
+            {
+              "name": "lamports",
+              "type": "u64"
+            },
+            {
+              "name": "fromChainid",
+              "type": "u64"
+            }
+          ]
+        },
+        {
+          "name": "swapoutBurn",
+          "docs": [
+            "Swapout by burn token whose mint authority is pda account `router_account`"
+          ],
+          "accounts": [
+            {
+              "name": "signer",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "from",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "mint",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "tokenProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "to",
+              "type": "string"
+            },
+            {
+              "name": "amount",
+              "type": "u64"
+            },
+            {
+              "name": "toChainid",
+              "type": "u64"
+            }
+          ]
+        },
+        {
+          "name": "swapoutTransfer",
+          "docs": [
+            "Swapout by transfer token to pda account `router_account`"
+          ],
+          "accounts": [
+            {
+              "name": "signer",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": false,
+              "isSigner": false
+            },
+            {
+              "name": "from",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "to",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "mint",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "tokenProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "to",
+              "type": "string"
+            },
+            {
+              "name": "amount",
+              "type": "u64"
+            },
+            {
+              "name": "toChainid",
+              "type": "u64"
+            }
+          ]
+        },
+        {
+          "name": "swapoutNative",
+          "docs": [
+            "Swapout by transfer native SOL to pda account `router_account`"
+          ],
+          "accounts": [
+            {
+              "name": "signer",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "systemProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "to",
+              "type": "string"
+            },
+            {
+              "name": "lamports",
+              "type": "u64"
+            },
+            {
+              "name": "toChainid",
+              "type": "u64"
+            }
+          ]
+        },
+        {
+          "name": "skimLamports",
+          "docs": [
+            "Skim lamports from pda account `router_account` to mpc account",
+            "The signer must be `router_account.mpc`"
+          ],
+          "accounts": [
+            {
+              "name": "mpc",
+              "isMut": true,
+              "isSigner": true
+            },
+            {
+              "name": "routerAccount",
+              "isMut": true,
+              "isSigner": false
+            },
+            {
+              "name": "systemProgram",
+              "isMut": false,
+              "isSigner": false
+            }
+          ],
+          "args": [
+            {
+              "name": "lamports",
+              "type": "u64"
+            }
+          ]
+        }
+      ],
+      "accounts": [
+        {
+          "name": "RouterAccount",
+          "type": {
+            "kind": "struct",
+            "fields": [
+              {
+                "name": "mpc",
+                "type": "publicKey"
+              },
+              {
+                "name": "bump",
+                "type": "u8"
+              },
+              {
+                "name": "pendingMpc",
+                "type": "publicKey"
+              },
+              {
+                "name": "enableSwapTrade",
+                "type": "bool"
+              }
+            ]
+          }
+        }
+      ],
+      "errors": [
+        {
+          "code": 6000,
+          "name": "InvalidArgument",
+          "msg": "Router argument invalid"
+        },
+        {
+          "code": 6001,
+          "name": "OnlyMPC",
+          "msg": "Only mpc can operate"
+        },
+        {
+          "code": 6002,
+          "name": "InvalidRouterMintAuthority",
+          "msg": "Invalid router mint authority"
+        },
+        {
+          "code": 6003,
+          "name": "SwapinTransferFromWrongAccount",
+          "msg": "Swapin from wrong account"
+        },
+        {
+          "code": 6004,
+          "name": "SwapoutTransferToWrongAccount",
+          "msg": "Swapout to wrong account"
+        },
+        {
+          "code": 6005,
+          "name": "ApplyWrongAccount",
+          "msg": "Apply mpc is different from pending mpc"
+        },
+        {
+          "code": 6006,
+          "name": "HasBeenSuspended",
+          "msg": "This router program has been suspended"
+        }
+      ],
+      "metadata": {
+        "address": "Au7kVdUXhuCMGqfNkYe7dendX8nAGS4bASjRyVcgbxUQ"
+      }
+    }
+    var abi1 = [
+      {"constant":false,
+      "inputs":[{"name":"spender","type":"address"},
+      {"name":"amount","type":"uint256"}],
+      "name":"approve",
+      "outputs":[{"name":"","type":"bool"}],
+      "payable":false,
+      "stateMutability":"nonpayable",
+      "type":"function"},
+      {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_owner",
+                "type": "address"
+            }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "name": "balance",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },{
+      "constant": true,
+      "inputs": [
+          {
+              "name": "_owner",
+              "type": "address"
+          },
+          {
+              "name": "_spender",
+              "type": "address"
+          }
+      ],
+      "name": "allowance",
+      "outputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  }
+    ];
+    if(deschainId){
+      const obj = selectData?.destChains[deschainId]
+      if(obj){
+          var Token1 = Object.values(obj);
+      }
+      
+     
+      // console.log(Token,"ddddddddddestination");
+    }
+    const anyToken=Token1[0]?.fromanytoken?.address;
+    var contract_address = Token1[0]?.router;
+    var contract_abi=Token1[0]?.routerABI;
+    // console.log(anyToken,"dddd");
+    const appRoveAnyToken = selectData?.address;
+    const amount = tokenvalue * 10 ** selectData?.decimals;
+    const toChainID = deschainId;
+    const rpc=initialchainData?.rpc
+    // console.log(amount, "hhhhhhhAmount");
+    //"https://bitter-dry-moon.solana-mainnet.discover.quiknode.pro/0a81f665c15e0f8999b0f7be962bb76d062185e2/"
+    const connection = new Connection("https://bitter-dry-moon.solana-mainnet.discover.quiknode.pro/0a81f665c15e0f8999b0f7be962bb76d062185e2/");
+    const contract1 = new PublicKey(contract_address);
+    // const programAccount = await connection.getAccountInfo(programId);
+    const transaction = new Transaction();
+    const contract = new Program(abi, contract1, rpc)
+    let routeraccount = await solanaWeb3.PublicKey.findProgramAddress([Buffer.from('Router')], contract1)
+    routeraccount = routeraccount[0]
+
+    console.log(connection,"nnnnnnnnnnnnnnnn")
+     if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
+      const base58publicKey = new solanaWeb3.PublicKey(walletAddress)
+     let instruction = await contract.instruction.swapoutBurn(
+        toAddress,
+        new anchor.BN(amount?.toString()),
+        new anchor.BN(toChainID.toString()),
+        {
+          accounts: {
+            signer: walletAddress,
+            routerAccount: routeraccount,
+            from: base58publicKey,
+            mint: anyToken,
+            tokenProgram: TOKEN_PROGRAM_ID
+          },
+        }
+      );
+      console.log(instruction,"hhhhhhhhhh")
+      const result = await connection.getLatestBlockhash()
+      // const result = await connection.getConfirmedBlock(blockNumber)
+      console.log(result)
+      const tx = new solanaWeb3.Transaction().add(instruction)
+      tx.lastValidBlockHeight = result.lastValidBlockHeight;
+      tx.recentBlockhash = result.blockhash;
+      tx.feePayer = new solanaWeb3.PublicKey(walletAddress)
+      console.log(tx)
+      const tsResult = await window?.solana?.signAndSendTransaction(tx)
+      console.log(tsResult,"hhhhpppp")
+      const txReceipt = {hash: tsResult.signature}
+      console.log(txReceipt,"hhhhpppp..............>")
+      setTxHash(txReceipt?.hash)
+      setStatusModalShow(true);
+      setModalShow(false)
+      setInterval(function(){transactionHash(txReceipt?.hash)}, 5000);
+     
+     }else if (contract_abi=="anySwapOut(fromanytoken,toAddress,amount,toChainID)"){
+      
+    const base58publicKey = new solanaWeb3.PublicKey(walletAddress)
+    const base58publicKey1 = new solanaWeb3.PublicKey(routeraccount)
+      let instruction = await contract.instruction.swapoutTransfer(
+        toAddress,
+        new anchor.BN(amount?.toString()),
+        new anchor.BN(toChainID.toString()),
+        {
+          accounts: {
+            signer: walletAddress,
+            routerAccount: routeraccount,
+            from: base58publicKey,
+            to:base58publicKey1,
+            mint: anyToken,
+            tokenProgram: TOKEN_PROGRAM_ID
+          },
+        }
+      );
+      console.log(instruction);
+      const result = await connection.getLatestBlockhash()
+      // const result = await connection.getConfirmedBlock(blockNumber)
+      console.log(result)
+      const tx = new solanaWeb3.Transaction().add(instruction)
+      tx.lastValidBlockHeight = result.lastValidBlockHeight;
+      tx.recentBlockhash = result.blockhash;
+      tx.feePayer = new solanaWeb3.PublicKey(walletAddress)
+      console.log(tx)
+      const tsResult = await window?.solana?.signAndSendTransaction(tx)
+      console.log(tsResult,"hhhhpppp")
+      const txReceipt = {hash: tsResult.signature}
+      console.log(txReceipt,"hhhhpppp..............>")
+ setTxHash(txReceipt?.hash)
+ setStatusModalShow(true);
+ setModalShow(false)
+ setInterval(function(){transactionHash(txReceipt?.hash)}, 5000);
+
+ console.log(tx)
+
+     }else if (contract_abi=="anySwapOutNative(fromanytoken,toAddress,toChainID,{value: amount})"){
+     let instruction = await contract.instruction.swapoutNative(
+        toAddress,
+        new anchor.BN(amount),
+        new anchor.BN(toChainID),
+        {
+          accounts: {
+            signer: walletAddress,
+            routerAccount: routeraccount,
+            systemProgram: solanaWeb3.SystemProgram.programId,
+          },
+        }
+      );
+          const result = await connection.getLatestBlockhash()
+          // const result = await connection.getConfirmedBlock(blockNumber)
+          console.log(result)
+          const tx = new solanaWeb3.Transaction().add(instruction)
+          tx.lastValidBlockHeight = result.lastValidBlockHeight;
+          tx.recentBlockhash = result.blockhash;
+          tx.feePayer = new solanaWeb3.PublicKey(walletAddress)
+          console.log(tx)
+          const tsResult = await window?.solana?.signAndSendTransaction(tx)
+          console.log(tsResult,"hhhhpppp")
+          const txReceipt = {hash: tsResult.signature}
+          console.log(txReceipt,"hhhhpppp..............>")
+     setTxHash(txReceipt.hash)
+     setStatusModalShow(true);
+     setModalShow(false)
+     setInterval(function(){transactionHash(txReceipt.hash)}, 5000);
 
      console.log(tx)
     }else if (contract_abi=="Swapout(amount,toAddress)"){
@@ -358,6 +1124,7 @@ function Swap(props) {
      if(tx?.status==true){      
       console.log(tx)
       setStatusModalShow(true);
+      setModalShow(false)
       setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
       
       alert("transaction success")
@@ -367,6 +1134,7 @@ function Swap(props) {
     }
      
   }
+
 
   async function transactionHash(hash){
     try{
@@ -429,7 +1197,7 @@ function Swap(props) {
                     <span>Address</span>
                   </li>
                   <li>
-                    <small>{address?.slice(0, 7) + "..." + address?.slice(-7)}</small>
+                    <small>{walletAddress?.slice(0, 7) + "..." + walletAddress?.slice(-7)}</small>
                   </li>
                 </ul>
               </div>
@@ -452,7 +1220,7 @@ function Swap(props) {
                   <li>
                     <small>{toAddress?.slice(0, 7) + "..." + toAddress?.slice(-7)}</small>
                   </li>:<li>
-                    <small>{address?.slice(0, 7) + "..." + address?.slice(-7)}</small>
+                    <small>{walletAddress?.slice(0, 7) + "..." + walletAddress?.slice(-7)}</small>
                   </li>}
                 </ul>
               </div>
@@ -500,7 +1268,7 @@ function Swap(props) {
        {isLoading?
    <div class="spinner-border" role="status">
    <span class="visually-hidden">Loading...</span>
- </div>: <button type="button" class="btn btn-primary swap-submit" onClick={swap}>Confirm</button>}
+ </div>:initialchainData?.name=='Solana'? <button type="button" class="btn btn-primary swap-submit" onClick={solanaSwap}>Confirm</button>:<button type="button" class="btn btn-primary swap-submit" onClick={swap}>Confirm</button>}
       </Modal.Footer>
     </Modal>
   );

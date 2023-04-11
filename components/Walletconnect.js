@@ -16,6 +16,7 @@ import CustomWallets from "./CustomWallets";
 function Walletconnect() {
   const [coinitems, setCoinitem] = useState();
   const [solAdress, setSolAddres] = useState();
+  const [walletAddress,setWalletAddress]=useState();
   const [modalShow, setModalShow] = React.useState(false);
   const [swapModalShow, setSwapModalShow] = React.useState(false);
   const [modalShow1, setModalShow1] = React.useState(false);
@@ -55,6 +56,7 @@ function Walletconnect() {
         const walletAddress = publicKey?.toBase58();
         // console.log(walletAddress,"hhhhhhhhhh")
         setSolAddres(walletAddress);
+        setWalletAddress(walletAddress)
         // var chainI="SOL_TEST"
         // localStorage.setItem("chainid",chainI)
         // setChainId(chainI)
@@ -71,6 +73,7 @@ function Walletconnect() {
       // const walletAddress = publicKey?.toBase58();
       // console.log(address, "hhhhhhhhhh.........lllllllll");
       setSolAddres(address);
+      setWalletAddress(address)
       setShowCustomWallet(false);
     } else {
       // window.open("https://martian.app/", "_blank");
@@ -84,6 +87,7 @@ function Walletconnect() {
       // const walletAddress = publicKey?.toBase58();
       // console.log(address, "hhhhhhhhhh.........lllllllll");
       setSolAddres(address);
+      setWalletAddress(address)
       setShowCustomWallet(false);
     } else {
       // window.open("https://martian.app/", "_blank");
@@ -191,7 +195,10 @@ function Walletconnect() {
     setInitialChainData(JSON.parse(initialchain));
   }, [isinitialchainData]);
 
-  
+  useEffect(() => {
+    setWalletAddress(address);
+  }, [chainId]);
+
 
   console.log( chainId,"connected................>");
   async function targetTokenValue() {
@@ -698,6 +705,7 @@ function Walletconnect() {
         />
 
          <Swap
+         walletAddress={walletAddress}
          newData={newData}
          initialchainData={initialchainData}
          destinationchainData={destinationchainData}
