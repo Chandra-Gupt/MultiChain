@@ -325,7 +325,7 @@ function Walletconnect() {
 
   useEffect(() => {
     tokenBalance();
-  }, [selectData,chainId]);
+  }, [selectData,chainId,address]);
 
   async function toAddress(e){
    const Address=e.target.value
