@@ -1,11 +1,11 @@
 {
+  "/_document": "pages/_document.js",
+  "/_app": "pages/_app.js",
   "/api/destinationChain": "pages/api/destinationChain.js",
   "/api/examplepage": "pages/api/examplepage.js",
-  "/_error": "pages/_error.js",
-  "/_app": "pages/_app.js",
-  "/": "pages/index.html",
-  "/api/initialChain": "pages/api/initialChain.js",
   "/api/hello": "pages/api/hello.js",
-  "/_document": "pages/_document.js",
+  "/api/initialChain": "pages/api/initialChain.js",
+  "/": "pages/index.html",
+  "/_error": "pages/_error.js",
   "/404": "pages/404.html"
 }

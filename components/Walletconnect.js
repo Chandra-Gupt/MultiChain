@@ -665,6 +665,13 @@ function Walletconnect() {
                 </div>
               </div>
             ) : null}
+
+            <div className="MiniMuM-BaL-warning">
+              <p>
+                Entered Amount is Lower than Minimum Swap Amount
+              </p>
+
+            </div>
             <div className="listing">
               <div className="head-list">
                 <img src="img/bulb.svg" alt="" />

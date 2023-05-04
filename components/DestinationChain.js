@@ -11,7 +11,7 @@ function DestinationChain(props) {
   const [destinationChain,setDestinationChain]=useState();
   const router = new useRouter();
   const destChains=props?.destChainss;
-  // console.log(destChains,"bbbbbbbbbbbb");
+  console.log(destChains,"bbbbbbbbbbbb");
     
   
   async function tokenlist() {
@@ -23,12 +23,22 @@ function DestinationChain(props) {
       // console.log(data,"data...........>")
       setDestinationChain(data)
       const matchedData= destChains?.map((item,id)=>{
-       const data1= data[item];
-         data1['ChainId']=item;
-         return data1
+        if(item=='SOL' || item=='XRP' || item=='NEAR' || item=='APT' || item=='ADA' || item=='SOL' ){
+        return 
+        }else{
+          const data1= data[item];
+          data1['ChainId']=item;
+          return data1
+        }
+      
       });
-      // console.log(matchedData,"nnnnnnnnnnnMATCHED DAta")
-      const obj = Object.values(matchedData);
+      const destData=matchedData?.filter((item,id)=>{
+        if(item){
+          return item;
+        }
+      })
+      // console.log(destData,"nnnnnnnnnnnMATCHED DAta")
+      const obj = Object.values(destData);
       setCoindata(obj);
       props?.setDestinationchainData(obj[0]);
       

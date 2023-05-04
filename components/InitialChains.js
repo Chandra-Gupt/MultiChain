@@ -32,13 +32,36 @@ function InitialChain(props) {
     if(chainData){
       var convert  = Object.keys(chainData).map(function(key)  
       {  
-       const data =chainData[key];
-       data['ChainId']=(key);
-     return data;  
+        console.log(Number(key),"kkkkkkkkkkkkkkkkkkkkkkkkkkey")
+        const Key=Number(key)
+        console.log(typeof(Key),"kkkkkkkkkkkkkkkkkkkkkkkkkkey.................")
+        if(key=='SOL' ||key=='APT' ||key=='BTC'|| key=='ADA' ||key=='LTC' ||key=='BLOCK' ||key=='NAS' ||key=='NEAR' ||key=='REEF' ||key=='TERRA' ||key=='XRP' ||key=='ATOM_DCORE'||key=='COLX'){
+           return 
+        }else{
+          const data =chainData[key];
+          data['ChainId']=(key);
+      
+            return data;
+           
+        }
+          
+        
+      
       });  
-      setCoindata(convert)
-       props?.setIsInitialChainData(convert[0]);
-      //  localStorage.setItem("initialchain",JSON.stringify(covert[0]))
+      console.log(convert,"bbbbbbbbbbbbbbbbb")
+      const data=convert?.filter((item,id)=>{
+        if(item){
+          return item;
+        }
+      })
+      console.log(data,"nnnnnnnnnnnn.........")
+      setCoindata(data)
+       props?.setIsInitialChainData(data[0]);
+       const localData= localStorage.getItem("initialchain")
+       if(!localData){
+        localStorage.setItem("initialchain",JSON.stringify(data[0]))
+       }
+       
       //  console.log(convert,"ggggggggggggggggggggggggggg...........")
     }
   
@@ -78,7 +101,7 @@ function InitialChain(props) {
     setSearchedData(null)
   }
 
-  // console.log("coindata------>",coindata);
+  console.log("coindata------>",coindata);
   return (
     <Modal
       {...props}
