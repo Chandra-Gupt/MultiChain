@@ -15,6 +15,10 @@
     --rk-colors-accentColor:#d5a224!important;
     
 }
+[data-rk]{
+    --rk-colors-accentColor:#d5a224 !important;
+    --rk-colors-connectButtonBackground:#d5a224!important;
+}
 
 button.navbar-toggler {
     display: none;
