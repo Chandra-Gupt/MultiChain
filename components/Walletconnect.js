@@ -42,10 +42,8 @@ function Walletconnect() {
   const [destToken,setDestToken]=useState();
   const [alertColor,setAlertColor]=useState()
   const [isDisabled,setIsDisabled]=useState(true);
-  const { data, isError, isLoading } = useBalance({
-    address: address,
-  });
-  const bal = data?.formatted;
+  
+  
  
   
   async function connecttowallet() {
@@ -258,12 +256,7 @@ function Walletconnect() {
   useEffect(() => {
     targetTokenValue();
   }, [tokenvalue]);
-  useEffect(() => {
-    if(address){
-      setWalletBalance(bal)
-    }
-    
-  }, [chainId,address]);
+  
 
   async function handleChange(e) {
     const token_value = e.target.value;
@@ -302,8 +295,16 @@ function Walletconnect() {
     const web3 = new Web3(Web3.givenProvider);
     const anyToken = selectData?.address;
     const walletAddress=address;
+    if(!address) return;
+    console.log(address,"Fucked up");
+  
+   if(anyToken == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+    let dat = await web3.eth.getBalance(address)
+    let bal =(dat/Math.pow(10, 18))
+    setWalletBalance(bal)
+   }
     
-      const tokenContract=new web3.eth.Contract(abi1,anyToken)
+    const tokenContract=new web3.eth.Contract(abi1,anyToken)
     
     
     if(address&&anyToken){
