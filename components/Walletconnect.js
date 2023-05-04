@@ -665,13 +665,13 @@ function Walletconnect() {
                 </div>
               </div>
             ) : null}
-
+            {alertColor=='red'?
             <div className="MiniMuM-BaL-warning">
-              <p>
-                Entered Amount is Lower than Minimum Swap Amount
+              <p style={{color:'red', fontWeight:'bold'}}>
+                Entered Amount is Lower than Minimum Swap Amount.
               </p>
 
-            </div>
+            </div>:null}
             <div className="listing">
               <div className="head-list">
                 <img src="img/bulb.svg" alt="" />

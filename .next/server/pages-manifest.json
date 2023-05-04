@@ -1,11 +1,7 @@
 {
-  "/_document": "pages/_document.js",
   "/_app": "pages/_app.js",
-  "/api/destinationChain": "pages/api/destinationChain.js",
-  "/api/examplepage": "pages/api/examplepage.js",
-  "/api/hello": "pages/api/hello.js",
-  "/api/initialChain": "pages/api/initialChain.js",
-  "/": "pages/index.html",
   "/_error": "pages/_error.js",
-  "/404": "pages/404.html"
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/api/destinationChain": "pages/api/destinationChain.js"
 }
