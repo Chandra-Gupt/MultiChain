@@ -295,10 +295,9 @@ function Walletconnect() {
     const web3 = new Web3(Web3.givenProvider);
     const anyToken = selectData?.address;
     const walletAddress=address;
-    if(!address) return;
-    console.log(address,"Fucked up");
+    
   
-   if(anyToken == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+   if(destinationcoinData?.tokenType=='NATIVE' || anyToken == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
     let dat = await web3.eth.getBalance(address)
     let bal =(dat/Math.pow(10, 18))
     setWalletBalance(bal)
