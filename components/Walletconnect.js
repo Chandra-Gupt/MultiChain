@@ -456,7 +456,7 @@ function Walletconnect() {
                 <ul>
                   <li>From</li>
                   <li>
-                    Balance: {Number.parseFloat(walletBalance).toFixed(3)}
+                    Balance: {(walletBalance.toString()).substring(0,7)}
                   </li>
                 </ul>
               </div>
