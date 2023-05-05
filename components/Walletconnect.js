@@ -295,26 +295,27 @@ function Walletconnect() {
     const web3 = new Web3(Web3.givenProvider);
     const anyToken = selectData?.address;
     const walletAddress=address;
+    console.log("bbbbbbbalance",selectData)
     
-    const tokenContract=new web3.eth.Contract(abi1,anyToken)
-   if(destinationcoinData?.tokenType=='NATIVE' || anyToken == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+   if(selectData?.tokenType=='NATIVE') {
     let dat = await web3.eth.getBalance(address)
     console.log("bbbbbbbalance",dat)
     let bal =(dat/Math.pow(10, 18))
     console.log(bal,"balance...................balance")
     setWalletBalance(bal)
-   }else if(address&&anyToken){
-      try{
+   }
+    else if(selectData?.tokenType=='TOKEN' && address && anyToken){
+      const tokenContract=new web3.eth.Contract(abi1,anyToken)
         let result = await tokenContract.methods.balanceOf(walletAddress).call();
         const decimals = await tokenContract.methods.decimals().call();
         
        const balance= result/Math.pow(10, decimals)
        console.log(balance,"balance...................")
         setWalletBalance(balance)
-      }catch(err){
-        console.log(err)
-      }
      
+     
+    }else{
+      console.log("kkkkkkkkkk")
     }
     
   }
