@@ -201,8 +201,9 @@ function Walletconnect() {
   console.log( chainId,"connected................>");
   async function targetTokenValue() {
    const value1= (tokenvalue * (destToken?.SwapFeeRatePerMillion)) / 100;
-   const fee1=tokenvalue*process.env.NEXT_PUBLIC_FEE_PERCENT/100
-   if(tokenvalue>=Number(destToken?.MinimumSwap)){
+   const fee1=tokenvalue*process.env.NEXT_PUBLIC_FEE_PERCENT/100;
+   const fee2=Number(destToken?.MinimumSwap)*process.env.NEXT_PUBLIC_FEE_PERCENT/100
+   if(tokenvalue>=Number(destToken?.MinimumSwap)+fee2){
     if(value1<Number(destToken?.MinimumSwapFee)){
       setTargetTokenValue(tokenvalue-Number(destToken?.MinimumSwapFee)-fee1);
       setIsDisabled(false)
