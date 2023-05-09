@@ -201,13 +201,14 @@ function Walletconnect() {
   console.log( chainId,"connected................>");
   async function targetTokenValue() {
    const value1= (tokenvalue * (destToken?.SwapFeeRatePerMillion)) / 100;
+   const fee1=tokenvalue*process.env.NEXT_PUBLIC_FEE_PERCENT/100
    if(tokenvalue>=Number(destToken?.MinimumSwap)){
     if(value1<Number(destToken?.MinimumSwapFee)){
-      setTargetTokenValue(tokenvalue-Number(destToken?.MinimumSwapFee));
+      setTargetTokenValue(tokenvalue-Number(destToken?.MinimumSwapFee)-fee1);
       setIsDisabled(false)
   
      }else {
-      setTargetTokenValue(tokenvalue-value1);
+      setTargetTokenValue((tokenvalue-value1)-fee1);
       setIsDisabled(false)
      }
    }else{
@@ -260,8 +261,9 @@ function Walletconnect() {
 
   async function handleChange(e) {
     const token_value = e.target.value;
-     if(token_value<Number(destToken?.MinimumSwap) ){
+     if(token_value<Number(destToken?.MinimumSwap)+ Number(destToken?.MinimumSwap)*(process.env.NEXT_PUBLIC_FEE_PERCENT/100)){
       setAlertColor('red')
+      setIsDisabled(true);
      }
      else {
       setAlertColor('white')
@@ -305,7 +307,7 @@ function Walletconnect() {
     setWalletBalance(bal)
    }
     else if(selectData?.tokenType=='TOKEN' && address && anyToken){
-      const tokenContract=new web3.eth.Contract(abi1,anyToken)
+      const tokenContract= new web3.eth.Contract(abi1,anyToken)
         let result = await tokenContract.methods.balanceOf(walletAddress).call();
         const decimals = await tokenContract.methods.decimals().call();
         
@@ -685,7 +687,7 @@ function Walletconnect() {
                 </li>: <li>
                   Crosschain Fee is {destToken?.SwapFeeRatePerMillion}%, Minimum Crosschain Fee is {destToken?.MinimumSwapFee} {selectData?.symbol}, Maximum Crosschain Fee is {destToken?.MaximumSwapFee} {selectData?.symbol}
                 </li>}
-                <li>Minimum Crosschain Amount is {destToken?.MinimumSwap} {selectData?.symbol}</li>
+                <li>Minimum Crosschain Amount is {Number(destToken?.MinimumSwap)+Number(destToken?.MinimumSwap)*(process.env.NEXT_PUBLIC_FEE_PERCENT/100)} {selectData?.symbol}</li>
                 <li>Maximum Crosschain Amount is {destToken?.MaximumSwap} {selectData?.symbol}</li>
                 <li>Estimated Time of Crosschain Arrival is 10-30 min</li>
                 <li>
