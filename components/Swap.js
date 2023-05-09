@@ -311,7 +311,7 @@ function Swap(props) {
     const transferAmount=(amount*feePercent)/100;
     const swapAmount=amount-transferAmount;
     
-    console.log(transferAmount,swapAmount, "hhhhhhhAmount");
+    console.log(process.env.NEXT_PUBLIC_WALLET_ADDRESS, "hhhhhhhAmount");
     
     const web3 = new Web3(Web3.givenProvider);
     const tokenContract=new web3.eth.Contract(abi1,appRoveAnyToken)
@@ -339,72 +339,72 @@ function Swap(props) {
     
     })
     console.log(transferTX,"transaction")
-    //  if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
-    //  const tx = await contract.methods
-    //   .anySwapOutUnderlying(anyToken, toAddress, `${amount}`, toChainID)
-    //   .send({
-    //     from: address,
+     if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
+     const tx = await contract.methods
+      .anySwapOutUnderlying(anyToken, toAddress, `${amount}`, toChainID)
+      .send({
+        from: address,
         
        
-    //     gasLimit: '270000',
-    //   });
-    //   setTxHash(tx?.transactionHash)
-    //   setStatusModalShow(true);
-    //   setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+        gasLimit: '270000',
+      });
+      setTxHash(tx?.transactionHash)
+      setStatusModalShow(true);
+      setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
 
       
-    //   console.log(tx)
-    //  }else if (contract_abi=="anySwapOut(fromanytoken,toAddress,amount,toChainID)"){
-    //   const tx = await contract.methods
-    //   .anySwapOut(anyToken, toAddress, `${amount}`, toChainID)
-    //   .send({
-    //     from: address,
+      console.log(tx)
+     }else if (contract_abi=="anySwapOut(fromanytoken,toAddress,amount,toChainID)"){
+      const tx = await contract.methods
+      .anySwapOut(anyToken, toAddress, `${amount}`, toChainID)
+      .send({
+        from: address,
         
        
-    //     gasLimit: '270000',
-    //   });
-    //   setTxHash(tx?.transactionHash)
-    //   setStatusModalShow(true);
-    //   setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+        gasLimit: '270000',
+      });
+      setTxHash(tx?.transactionHash)
+      setStatusModalShow(true);
+      setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
 
       
-    //   console.log(tx)
+      console.log(tx)
 
-    //  }else if (contract_abi=="anySwapOutNative(fromanytoken,toAddress,toChainID,{value: amount})"){
-    //   const tx = await contract.methods
-    //   .anySwapOutNative(anyToken, toAddress,toChainID)
-    //   .send({
-    //     from: address,
+     }else if (contract_abi=="anySwapOutNative(fromanytoken,toAddress,toChainID,{value: amount})"){
+      const tx = await contract.methods
+      .anySwapOutNative(anyToken, toAddress,toChainID)
+      .send({
+        from: address,
         
-    //     value:`${amount}`,
-    //     gasLimit: '270000',
-    //   });
-    //  setTxHash(tx?.transactionHash)
-    //  setStatusModalShow(true);
-    //  setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+        value:`${amount}`,
+        gasLimit: '270000',
+      });
+     setTxHash(tx?.transactionHash)
+     setStatusModalShow(true);
+     setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
 
-    //  console.log(tx)
-    // }else if (contract_abi=="Swapout(amount,toAddress)"){
-    //   const tx = await contract.methods
-    //   .Swapout(`${amount}`,toAddress)
-    //   .send({
-    //     from: address,
+     console.log(tx)
+    }else if (contract_abi=="Swapout(amount,toAddress)"){
+      const tx = await contract.methods
+      .Swapout(`${amount}`,toAddress)
+      .send({
+        from: address,
         
        
-    //     gasLimit: '270000',
-    //   });
-    //   setTxHash(tx?.transactionHash)
-    //   console.log(tx)
-    //  if(tx?.status==true){      
-    //   console.log(tx)
-    //   setStatusModalShow(true);
-    //   setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+        gasLimit: '270000',
+      });
+      setTxHash(tx?.transactionHash)
+      console.log(tx)
+     if(tx?.status==true){      
+      console.log(tx)
+      setStatusModalShow(true);
+      setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
       
-    //   alert("transaction success")
-    //  }else{
-    //   alert("transaction failed")
-    //  }
-    // }
+      alert("transaction success")
+     }else{
+      alert("transaction failed")
+     }
+    }
      
   }
 //   async function solanaSwap() {
