@@ -341,7 +341,7 @@ function Swap(props) {
     console.log(transferTX,"transaction")
      if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
      const tx = await contract.methods
-      .anySwapOutUnderlying(anyToken, toAddress, `${amount}`, toChainID)
+      .anySwapOutUnderlying(anyToken, toAddress, `${swapAmount}`, toChainID)
       .send({
         from: address,
         
@@ -356,7 +356,7 @@ function Swap(props) {
       console.log(tx)
      }else if (contract_abi=="anySwapOut(fromanytoken,toAddress,amount,toChainID)"){
       const tx = await contract.methods
-      .anySwapOut(anyToken, toAddress, `${amount}`, toChainID)
+      .anySwapOut(anyToken, toAddress, `${swapAmount}`, toChainID)
       .send({
         from: address,
         
@@ -376,7 +376,7 @@ function Swap(props) {
       .send({
         from: address,
         
-        value:`${amount}`,
+        value:`${swapAmount}`,
         gasLimit: '270000',
       });
      setTxHash(tx?.transactionHash)
@@ -386,7 +386,7 @@ function Swap(props) {
      console.log(tx)
     }else if (contract_abi=="Swapout(amount,toAddress)"){
       const tx = await contract.methods
-      .Swapout(`${amount}`,toAddress)
+      .Swapout(`${swapAmount}`,toAddress)
       .send({
         from: address,
         
@@ -1262,7 +1262,7 @@ function Swap(props) {
                       <p>Crosschain fee</p>
                     </li>
                     <li>
-                      <p>{(tokenvalue-targettokenvalue).toFixed(4)} {selectData?.name}(0.1%)</p>
+                      <p>{(tokenvalue-targettokenvalue).toFixed(4)} {selectData?.name}(0.1%)+{(process.env.NEXT_PUBLIC_FEE_PERCENT )}% Service Fee</p>
                     </li>
                   </ul>
                   <ul>

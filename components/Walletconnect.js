@@ -33,8 +33,8 @@ function Walletconnect() {
   const [deschainId, setDesChainId] = useState();
   const [showCustomWallet, setShowCustomWallet] = useState();
   const [customWalletName, setCustomWalletName] = useState();
-  const [tokenvalue, setTokenValue] = useState(0.0);
-  const [targettokenvalue, setTargetTokenValue] = useState(0.0);
+  const [tokenvalue, setTokenValue] = useState(0);
+  const [targettokenvalue, setTargetTokenValue] = useState(0);
   const [walletBalance,setWalletBalance]=useState(0.0)
   const [destChainss,setDestChains]=useState()
   const [newData,setNewData1]=useState();
