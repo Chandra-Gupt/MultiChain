@@ -2,9 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/bitCoin": "pages/api/bitCoin.js",
   "/": "pages/index.js",
   "/api/initialChain": "pages/api/initialChain.js",
   "/api/examplepage": "pages/api/examplepage.js",
-  "/api/destinationChain": "pages/api/destinationChain.js"
+  "/api/destinationChain": "pages/api/destinationChain.js",
+  "/api/bitCoin": "pages/api/bitCoin.js"
 }

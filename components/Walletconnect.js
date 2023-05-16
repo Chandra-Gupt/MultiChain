@@ -44,7 +44,7 @@ function Walletconnect() {
   const [alertColor,setAlertColor]=useState()
   const [isDisabled,setIsDisabled]=useState(true);
   const [bitCoinModalShow,setBitCoinModalShow]=useState(false)
-  
+  const [isValidAddress,setIsValidAddress]=useState(true);
  
   
   async function connecttowallet() {
@@ -340,7 +340,16 @@ function Walletconnect() {
    setToAddress(Address)
    console.log(Address,"bbbbbbb");
   }
-  
+
+  useEffect(() => {
+    const web3 = new Web3("https://mainnet.infura.io/v3/c8fb3111e62c4b40867156ac3c3cbef4");
+    if(initialchainData?.name == "Bitcoin" && toAddresss){
+      const isValid=web3.utils.isAddress(toAddresss)
+      console.log(isValid,"nnnnnnnnnn");
+      setIsValidAddress(isValid)
+      setIsDisplay(true)
+    }
+  }, [toAddresss]);
 
   return (
     <>
@@ -678,6 +687,8 @@ function Walletconnect() {
                       Recipient ( Please do NOT send funds to exchange wallet or
                       custodial wallet. )
                     </li>
+                    {!isValidAddress?
+                    <h7 style={{color:"red"}}>Invalid Address</h7>:null}
                   </ul>
                 </div>
                 <div className="bottom">
