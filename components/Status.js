@@ -8,7 +8,7 @@ import Web3 from "web3";
 // import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 
-function Status(props) {
+function  Status(props) {
  
     const [toAddress,setToAddress]=useState();
     // const [progressPercent,setProgressPersent]=useState(33);

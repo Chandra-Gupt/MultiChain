@@ -35,7 +35,7 @@ function InitialChain(props) {
         console.log(Number(key),"kkkkkkkkkkkkkkkkkkkkkkkkkkey")
         const Key=Number(key)
         console.log(typeof(Key),"kkkkkkkkkkkkkkkkkkkkkkkkkkey.................")
-        if(key=='SOL' ||key=='APT' ||key=='BTC'|| key=='ADA' ||key=='LTC' ||key=='BLOCK' ||key=='NAS' ||key=='NEAR' ||key=='REEF' ||key=='TERRA' ||key=='XRP' ||key=='ATOM_DCORE'||key=='COLX'){
+        if(key=='SOL' ||key=='APT' || key=='ADA' ||key=='LTC' ||key=='BLOCK' ||key=='NAS' ||key=='NEAR' ||key=='REEF' ||key=='TERRA' ||key=='XRP' ||key=='ATOM_DCORE'||key=='COLX'){
            return 
         }else{
           const data =chainData[key];

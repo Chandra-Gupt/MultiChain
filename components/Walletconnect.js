@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import DestinationChain from "./DestinationChain";
 import Web3 from "web3";
 import CustomWallets from "./CustomWallets";
+import BitCoin from "./BitCoin";
 
 function Walletconnect() {
   const [coinitems, setCoinitem] = useState();
@@ -42,7 +43,7 @@ function Walletconnect() {
   const [destToken,setDestToken]=useState();
   const [alertColor,setAlertColor]=useState()
   const [isDisabled,setIsDisabled]=useState(true);
-  
+  const [bitCoinModalShow,setBitCoinModalShow]=useState(false)
   
  
   
@@ -373,8 +374,7 @@ function Walletconnect() {
                 onHide={() => setShowInitialChain(false)}
                 id="fstId"
               />
-              {initialchainData?.name == "Solana" ||
-              initialchainData?.name == "Aptos " ? (
+              {initialchainData?.name == "Solana"? (
                 solAdress ? (
                   <p className="trade-button" id="tradePara">
                     {solAdress?.slice(0, 5) + "..." + solAdress?.slice(-4)}
@@ -388,7 +388,26 @@ function Walletconnect() {
                     Connect to a wallet
                   </a>
                 )
-              ) : (
+              ) : initialchainData?.name == "Bitcoin"? (
+                <a
+                href="#"
+                className="trade-button respons"
+                id="fstId1"
+               
+              >
+                BTC
+                <span>
+                  <img
+                    className="fst12"
+                    id="fstSpan1"
+                    src={initialchainData?.logoUrl}
+                    alt=""
+                  />
+                </span>
+                
+              </a>
+                
+              ):(
                 // <a href="#" className="trade-button1">
                 <ConnectButton chainStatus="none" 
                 showBalance={false}
@@ -698,14 +717,12 @@ function Walletconnect() {
               </ul>
             </div>
             <div className="btn-connect">
-              <button href="#" className="custom-wallet" disabled={isDisabled} onClick={()=>setSwapModalShow(true)}>
-                {/* < Web3Button
-                icon="hide"
-                label='Connect Wallet'
-                balance='hide'
-                /> */}
+              {initialchainData?.name == "Bitcoin"?
+              <button href="#" className="custom-wallet" disabled={isDisabled} onClick={()=>setBitCoinModalShow(true)}>
                 Swap
-              </button>
+              </button>:<button href="#" className="custom-wallet" disabled={isDisabled} onClick={()=>setSwapModalShow(true)}>
+                Swap
+              </button>}
             </div>
           </div>
         </div>
@@ -729,6 +746,22 @@ function Walletconnect() {
           show={swapModalShow}
           onHide={() => setSwapModalShow(false)}
         />
+
+        <BitCoin
+          walletAddress={walletAddress}
+          newData={newData}
+          initialchainData={initialchainData}
+          destinationchainData={destinationchainData}
+          targettokenvalue={targettokenvalue}
+           selectData={selectData}
+           deschainId={deschainId}
+           tokenvalue={tokenvalue}
+           toAddresss={toAddresss}
+           setShow={setBitCoinModalShow}
+          show={bitCoinModalShow}
+          onHide={() => setBitCoinModalShow(false)}
+        />
+
       </section>
     </>
   );

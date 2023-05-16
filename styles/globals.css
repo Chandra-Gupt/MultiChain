@@ -78,7 +78,7 @@ section.happy-couples .right-happy .carousel-inner {
     cursor: pointer;
 }
 .Status .modal-body {
-    padding: 35px 18px;
+    padding: 61px 18px;
 }
 
 .Status #swap-footer {
@@ -892,6 +892,23 @@ a.trade-button1 {
 }
 .wallet-sedule .wallet-butt img {
     margin-right: 12px;
+}
+
+.bitCoinQR {
+
+    text-align: center;
+}
+input.bitInPut-TX {
+    border: none;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+h6.DiScRiPtIoN-MAttS {
+    margin-top: 15px;
+}
+img#fstSpan1 {
+    margin-left: 5px;
 }
 
 #fstId{ white-space: nowrap !important; height: 40px;}
