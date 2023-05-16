@@ -351,6 +351,15 @@ function Walletconnect() {
     }
   }, [toAddresss]);
 
+  useEffect(() => {
+   
+    if(initialchainData?.name == "Bitcoin"){
+      setIsDisplay(true)
+    }else{
+      setIsDisplay(false)
+    }
+  }, [initialchainData]);
+
   return (
     <>
       <nav className="navbar bg-body-tertiary fixed-top" id="side-dash">
