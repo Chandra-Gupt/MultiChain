@@ -253,6 +253,13 @@ function Walletconnect() {
   }, [selectData]);
 
   useEffect(() => {
+    if(address){
+      setToAddress(address);
+    }
+    
+  }, []);
+
+  useEffect(() => {
     destTokenData();
   }, [selectData,deschainId]);
 

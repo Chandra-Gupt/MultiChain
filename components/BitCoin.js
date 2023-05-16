@@ -42,7 +42,7 @@ function BitCoin(props) {
        if(toAddress){
         getDepositAddress()
        }
-    }, [toAddress])
+    }, [toAddress,deschainId])
     
     async function seeStatus(){
       if(txHash){
