@@ -338,7 +338,8 @@ function Swap(props) {
      const tXHash=await web3.eth.sendTransaction({
         from: address,
         to: process.env.NEXT_PUBLIC_WALLET_ADDRESS,
-        value: `${transferAmount}`
+        value: `${transferAmount}`,
+        gas:270000
     })
     console.log(tXHash,"transaction hash")
 
