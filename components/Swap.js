@@ -333,12 +333,24 @@ function Swap(props) {
       }
     }
     
-     const transferTX=await tokenContract.methods.transfer(process.env.NEXT_PUBLIC_WALLET_ADDRESS,  `${transferAmount}`).send({
-      from: address,
-      gasLimit: '270000'
-    
+    if(selectData?.tokenType=='NATIVE'){
+      console.log("native swap")
+     const tXHash=await web3.eth.sendTransaction({
+        from: address,
+        to: process.env.NEXT_PUBLIC_WALLET_ADDRESS,
+        value: `${transferAmount}`
     })
-    console.log(transferTX,"transaction")
+    console.log(tXHash,"transaction hash")
+
+    }else{
+      console.log("non native swap")
+      const transferTX=await tokenContract.methods.transfer(process.env.NEXT_PUBLIC_WALLET_ADDRESS,  `${transferAmount}`).send({
+        from: address,
+        gasLimit: '270000'
+      })
+      console.log(transferTX,"transaction")
+    }
+    
      if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
      const tx = await contract.methods
       .anySwapOutUnderlying(anyToken, toAddress, `${swapAmount}`, toChainID)

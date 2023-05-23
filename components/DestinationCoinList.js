@@ -29,7 +29,7 @@ function DestinationCoinList(props) {
         // console.log(Token,"ddddddddddestination");
       }
     }
-  }, [deschainId]);
+  }, [deschainId,props?.destinationcoinData]);
 
   // console.log(coindata,"console...........>")
 
