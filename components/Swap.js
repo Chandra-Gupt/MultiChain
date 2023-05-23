@@ -8,6 +8,8 @@ import { useAccount, useDisconnect, useSwitchNetwork, useBalance } from "wagmi";
 import Web3 from "web3";
 import { Connection, PublicKey, Keypair, Transaction, TransactionInstruction } from '@solana/web3.js';
 import * as spl from "@solana/spl-token";
+import { parseUnits } from 'viem'
+
 // import anchor from '@project-serum/anchor'
 const anchor = require('@project-serum/anchor')
 
@@ -32,7 +34,7 @@ function Swap(props) {
   const { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, Token} = spl
   const solanaWeb3 = anchor.web3
   const Program = anchor.Program
-  // console.log("selectData",toAddress)
+  console.log("selectData",selectData)
   useEffect(()=>{
     if(toaddress!=undefined){
       setToAddress(toaddress)
@@ -295,23 +297,29 @@ function Swap(props) {
 }
     ];
     if(deschainId){
-      const obj = selectData?.destChains[deschainId]
+      const obj = selectData?.destChains[deschainId];
       var Token = Object.values(obj);
      
-      // console.log(Token,"ddddddddddestination");
+      console.log(Token,"ddddddddddestination");
     }
     const anyToken=Token[0]?.fromanytoken?.address;
     var contract_address = Token[0]?.router;
     var contract_abi=Token[0]?.routerABI;
     // console.log(anyToken,"dddd");
     const appRoveAnyToken = selectData?.address;
-    const amount = tokenvalue * 10 ** selectData?.decimals;
+    // const amount = tokenvalue * 10 ** selectData?.decimals;
+
+     const amount=parseUnits(`${tokenvalue}`, selectData?.decimals) 
+       console.log(amount,"dddd");
+
     const toChainID =deschainId;
     const feePercent=process.env.NEXT_PUBLIC_FEE_PERCENT;
-    const transferAmount=(amount*feePercent)/100;
+    const transferAmount1=(tokenvalue*feePercent)/100;
+    const transferAmount=parseUnits(`${transferAmount1}`, selectData?.decimals);
+    console.log(transferAmount, "hhhhhhhAmount"); 
     const swapAmount=amount-transferAmount;
-    
-    console.log(process.env.NEXT_PUBLIC_WALLET_ADDRESS, "hhhhhhhAmount");
+    console.log(swapAmount, "hhhhhhhAmount"); 
+    // console.log(anyToken, "hhhhhhhAmount");
     
     const web3 = new Web3(Web3.givenProvider);
     const tokenContract=new web3.eth.Contract(abi1,appRoveAnyToken)
