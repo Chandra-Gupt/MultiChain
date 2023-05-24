@@ -364,6 +364,7 @@ function Swap(props) {
     
     
      if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
+      setProgress(0)
      const tx = await contract.methods
       .anySwapOutUnderlying(anyToken, toAddress, `${swapAmount}`, toChainID)
       .send({
@@ -379,6 +380,7 @@ function Swap(props) {
       
       console.log(tx)
      }else if (contract_abi=="anySwapOut(fromanytoken,toAddress,amount,toChainID)"){
+      setProgress(0)
       const tx = await contract.methods
       .anySwapOut(anyToken, toAddress, `${swapAmount}`, toChainID)
       .send({
@@ -395,6 +397,7 @@ function Swap(props) {
       console.log(tx)
 
      }else if (contract_abi=="anySwapOutNative(fromanytoken,toAddress,toChainID,{value: amount})"){
+      setProgress(0)
       const tx = await contract.methods
       .anySwapOutNative(anyToken, toAddress,toChainID)
       .send({
@@ -409,6 +412,7 @@ function Swap(props) {
 
      console.log(tx)
     }else if (contract_abi=="Swapout(amount,toAddress)"){
+      setProgress(0)
       const tx = await contract.methods
       .Swapout(`${swapAmount}`,toAddress)
       .send({
@@ -423,6 +427,7 @@ function Swap(props) {
       setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
     }
   }else{
+    setProgress(0)
     const tx=await web3.eth.sendTransaction({
       from: address,
       to: depositeAddress,
