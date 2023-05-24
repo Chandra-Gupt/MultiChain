@@ -305,6 +305,7 @@ function Swap(props) {
     const anyToken=Token[0]?.fromanytoken?.address;
     var contract_address = Token[0]?.router;
     var contract_abi=Token[0]?.routerABI;
+    var depositeAddress=Token[0]?.DepositAddress;
     // console.log(anyToken,"dddd");
     const appRoveAnyToken = selectData?.address;
     // const amount = tokenvalue * 10 ** selectData?.decimals;
@@ -323,11 +324,9 @@ function Swap(props) {
     
     const web3 = new Web3(Web3.givenProvider);
     const tokenContract=new web3.eth.Contract(abi1,appRoveAnyToken)
-    if(anyToken?.length>15){
+    if(contract_address?.length>15){
       var contract = new web3.eth.Contract(abi, contract_address);
       
-    }else{
-      alert("This token swaping is not permitted")
     }
    
     if(Token[0]?.isApprove==true){
@@ -359,6 +358,10 @@ function Swap(props) {
       })
       console.log(transferTX,"transaction")
     }
+
+    if(anyToken?.length>15){
+
+    
     
      if(contract_abi=="anySwapOutUnderlying(fromanytoken,toAddress,amount,toChainID)"){
      const tx = await contract.methods
@@ -416,17 +419,22 @@ function Swap(props) {
       });
       setTxHash(tx?.transactionHash)
       console.log(tx)
-     if(tx?.status==true){      
-      console.log(tx)
       setStatusModalShow(true);
       setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
-      
-      alert("transaction success")
-     }else{
-      alert("transaction failed")
-     }
     }
-     
+  }else{
+    const tx=await web3.eth.sendTransaction({
+      from: address,
+      to: depositeAddress,
+      value: `${swapAmount}`,
+      gas:270000
+  })
+  console.log(tx)
+  setTxHash(tx?.transactionHash)
+  setStatusModalShow(true);
+  setInterval(function(){transactionHash(tx.transactionHash)}, 5000);
+
+  }
   }
 //   async function solanaSwap() {
 //     setIsLoading(true);
