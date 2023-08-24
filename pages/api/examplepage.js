@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       console.log(chainid, 'data properties')
       var config = {
         method: "get",
-        url:  `https://bridgeapi.anyswap.exchange/v4/tokenlistv4/${chainid}`,
+        url:  `https://bridgeapi.multichain.org/v4/tokenlistv4/${chainid}`,
 
       };
       await axios(config).then(function (response) {
